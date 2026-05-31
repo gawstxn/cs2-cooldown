@@ -42,3 +42,13 @@ body {
   background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
   background-size: 24px 24px;
 }
+
+/* Prevent iOS Safari auto-zoom on focus by ensuring font-size is at least 16px on mobile */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
