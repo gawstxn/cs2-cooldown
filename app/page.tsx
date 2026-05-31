@@ -556,7 +556,7 @@ export default function App() {
                     placeholder="เพิ่มชื่อไอดีไว้เซฟด่วน เช่น Main, Smurf_02"
                     value={newProfileName}
                     onChange={(e) => setNewProfileName(e.target.value)}
-                    className="flex-1 bg-slate-50 border border-slate-200/80 rounded-lg px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium"
+                    className="w-full bg-slate-50 border border-slate-200/80 rounded-lg px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
                   />
                   <button
                     type="submit"
@@ -636,7 +636,7 @@ export default function App() {
                       placeholder="กรอกชื่อไอดี หรือคลิกเลือกจากบัญชีด่วนด้านบน"
                       value={accountName}
                       onChange={(e) => setAccountName(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium"
+                      className="w-full bg-slate-50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
                     />
                   </div>
 
@@ -750,7 +750,7 @@ export default function App() {
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       rows={2}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all resize-none font-medium"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all resize-none"
                     />
                   </div>
 
@@ -775,7 +775,7 @@ export default function App() {
                     placeholder="ค้นหาตามไอดี หรือประเภทคูลดาวน์..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-xs text-slate-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-xs text-slate-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
                   />
                 </div>
 
