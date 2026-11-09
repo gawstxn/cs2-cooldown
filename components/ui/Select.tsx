@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Check, ChevronDown } from "lucide-react";
+
+const LIST_MAX_HEIGHT = 320;
+const GAP = 8;
 
 export interface SelectOption<T extends string> {
   value: T;
@@ -37,6 +41,7 @@ export function Select<T extends string>({
 }: SelectProps<T>) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [pos, setPos] = useState<React.CSSProperties>({});
   const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const listId = useId();
@@ -45,14 +50,42 @@ export function Select<T extends string>({
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+      const t = e.target as Node;
+      if (!rootRef.current?.contains(t) && !listRef.current?.contains(t)) setOpen(false);
     };
+    // The list is fixed to the viewport, so close it when anything else scrolls or resizes.
+    const onScroll = (e: Event) => {
+      if (e.target !== listRef.current) setOpen(false);
+    };
+    const onResize = () => setOpen(false);
     document.addEventListener("mousedown", onDown);
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onResize);
     listRef.current?.focus();
-    return () => document.removeEventListener("mousedown", onDown);
+    listRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: "nearest" });
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", onResize);
+    };
   }, [open]);
 
   const openList = () => {
+    // Render the list in a portal with fixed positioning, so modals and
+    // scroll containers can't clip it. Flip above the button when there's no room below.
+    const rect = rootRef.current?.getBoundingClientRect();
+    if (rect) {
+      const height = Math.min(options.length * 40 + 14, LIST_MAX_HEIGHT);
+      const below = window.innerHeight - rect.bottom;
+      const above = rect.top;
+      const flip = below < height + GAP * 2 && above > below;
+      setPos({
+        position: "fixed",
+        left: rect.left,
+        minWidth: rect.width,
+        ...(flip ? { bottom: window.innerHeight - rect.top + GAP } : { top: rect.bottom + GAP }),
+      });
+    }
     setActive(Math.max(0, options.findIndex((o) => o.value === value)));
     setOpen(true);
   };
@@ -116,7 +149,8 @@ export function Select<T extends string>({
         />
       </button>
 
-      {open && (
+      {open &&
+        createPortal(
         <ul
           ref={listRef}
           id={listId}
@@ -124,7 +158,8 @@ export function Select<T extends string>({
           tabIndex={-1}
           aria-activedescendant={`${listId}-${active}`}
           onKeyDown={onListKey}
-          className="anim-pop absolute z-30 mt-2 left-0 min-w-full max-h-72 overflow-y-auto rounded-2xl border border-line-2 bg-card p-1.5 shadow-[0_16px_40px_rgba(43,35,32,0.12)] outline-none"
+          style={{ ...pos, maxHeight: LIST_MAX_HEIGHT }}
+          className="anim-pop z-[70] overflow-y-auto rounded-2xl border border-line-2 bg-card p-1.5 shadow-[0_16px_40px_rgba(43,35,32,0.16)] outline-none"
         >
           {options.map((o, i) => {
             const isSel = o.value === value;
@@ -145,8 +180,9 @@ export function Select<T extends string>({
               </li>
             );
           })}
-        </ul>
-      )}
+        </ul>,
+          document.body,
+        )}
     </div>
   );
 }

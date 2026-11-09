@@ -5,6 +5,8 @@ export interface Account {
   id: string;
   name: string;
   tag: AccountTag;
+  /** Prime Status. Missing means Prime (data saved before this field existed). */
+  prime?: boolean;
   rankMode?: RankMode;
   rating?: string;
   steamUrl?: string;

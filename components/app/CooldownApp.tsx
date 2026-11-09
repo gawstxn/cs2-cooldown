@@ -7,7 +7,7 @@ import { Menu } from "@/components/ui/Menu";
 import type { Account, AppState } from "@/lib/cooldown/types";
 import { setAppState, makeId, useAppState } from "@/lib/cooldown/store";
 import { currentTime, useNow } from "@/lib/cooldown/clock";
-import { type AccountView, buildAccountViews, weeklyMarks } from "@/lib/cooldown/derive";
+import { type AccountView, buildAccountViews, isPrime, weeklyMarks } from "@/lib/cooldown/derive";
 import { formatDuration, formatTime, pad } from "@/lib/cooldown/time";
 import { Button } from "@/components/ui/Button";
 import { ToastViewport, useToasts } from "@/components/ui/Toast";
@@ -153,7 +153,7 @@ function Shell({ state, now }: { state: AppState; now: number }) {
 
   const weeklyLeft = (() => {
     const { marks } = weeklyMarks(state, now);
-    return views.filter((v) => !marks[v.account.id]?.drop).length;
+    return views.filter((v) => isPrime(v.account) && !marks[v.account.id]?.drop).length;
   })();
 
   return (
@@ -228,10 +228,6 @@ function Shell({ state, now }: { state: AppState; now: number }) {
         )}
         {tab === "weekly" && <WeeklyTab state={state} views={views} now={now} actions={actions} />}
       </main>
-
-      <footer className="border-t border-line py-5 text-center text-xs text-mute">
-        ข้อมูลเก็บไว้ในเบราว์เซอร์นี้เท่านั้น
-      </footer>
 
       {(modal.kind === "add" || modal.kind === "edit") && (
         <AccountModal

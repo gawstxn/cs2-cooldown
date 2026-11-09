@@ -90,6 +90,39 @@ export function CheckToggle({ checked, onChange, label, tone }: CheckToggleProps
   );
 }
 
+interface SwitchProps {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  label: string;
+  description?: string;
+}
+
+/** On/off switch with its label and an optional description, the whole row clickable. */
+export function Switch({ checked, onChange, label, description }: SwitchProps) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={() => onChange(!checked)}
+      className="w-full flex items-center gap-4 rounded-2xl border border-line-2 bg-cream px-4 py-3 text-left cursor-pointer focus-ring"
+    >
+      <span className="flex-1 min-w-0">
+        <span className="block text-[15px] font-medium text-ink">{label}</span>
+        {description && <span className="block text-[13px] text-mute">{description}</span>}
+      </span>
+      <span
+        aria-hidden
+        className={`relative shrink-0 w-12 h-7 rounded-full transition-colors ${checked ? "bg-espresso" : "bg-unchecked"}`}
+      >
+        <span
+          className={`absolute top-1 size-5 rounded-full bg-card shadow transition-[left] ${checked ? "left-6" : "left-1"}`}
+        />
+      </span>
+    </button>
+  );
+}
+
 interface StepperProps {
   label: string;
   value: number;
