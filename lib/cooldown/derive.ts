@@ -10,6 +10,9 @@ import { DAY, WEEK, currentPeriodStart, formatDayMonth } from "./time";
 
 export const isLongBan = (r: { durationMs: number }) => r.durationMs >= 7 * DAY;
 
+/** Only Prime accounts get the weekly drop and level-up rewards. */
+export const isPrime = (a: Account) => a.prime !== false;
+
 /** When a record stopped counting down (early cancel or natural end). */
 export const effectiveEnd = (r: CooldownRecord) => r.cancelledAt ?? r.endsAt;
 

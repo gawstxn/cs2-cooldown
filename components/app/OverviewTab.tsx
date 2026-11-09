@@ -1,7 +1,7 @@
 import React from "react";
 import { UserPlus } from "lucide-react";
 import type { AppState } from "@/lib/cooldown/types";
-import { type AccountView, isLongBan, recentActivity, weeklyMarks } from "@/lib/cooldown/derive";
+import { type AccountView, isLongBan, isPrime, recentActivity, weeklyMarks } from "@/lib/cooldown/derive";
 import {
   DAY,
   formatClock,
@@ -32,7 +32,8 @@ export function OverviewTab({ state, views, now, actions }: Props) {
   const next = cooling[0];
   const reset = nextReset(now, state.reset);
   const { marks } = weeklyMarks(state, now);
-  const dropsDone = views.filter((v) => marks[v.account.id]?.drop).length;
+  const eligible = views.filter((v) => isPrime(v.account));
+  const dropsDone = eligible.filter((v) => marks[v.account.id]?.drop).length;
 
   return (
     <div className="flex flex-col gap-4">
@@ -79,7 +80,7 @@ export function OverviewTab({ state, views, now, actions }: Props) {
             </div>
             <p className="text-[28px] font-semibold tabular">{formatClockInline(reset - now)}</p>
             <div className="flex gap-1 mt-3" aria-hidden>
-              {views.map((v, i) => (
+              {eligible.map((v, i) => (
                 <span
                   key={v.account.id}
                   className={`flex-1 h-1.5 rounded-full ${i < dropsDone ? "bg-caramel" : "bg-soft"}`}
@@ -87,7 +88,7 @@ export function OverviewTab({ state, views, now, actions }: Props) {
               ))}
             </div>
             <p className="mt-2 text-[13px] text-ink-2">
-              รับดรอปแล้ว {dropsDone} จาก {views.length} ไอดี
+              รับดรอปแล้ว {dropsDone} จาก {eligible.length} ไอดีที่มี Prime
             </p>
           </Card>
         </div>

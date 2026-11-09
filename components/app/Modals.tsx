@@ -6,7 +6,7 @@ import { REASONS } from "@/lib/cooldown/types";
 import type { AccountView } from "@/lib/cooldown/derive";
 import { DAY, HOUR, MINUTE, formatCompact, formatDateTime, pad, TH_DAYS_LONG } from "@/lib/cooldown/time";
 import { Button } from "@/components/ui/Button";
-import { Chip, Segmented, Stepper } from "@/components/ui/Choice";
+import { Chip, Segmented, Stepper, Switch } from "@/components/ui/Choice";
 import { STATUS_COLOR } from "@/components/ui/Display";
 import { Field, TextArea, TextInput } from "@/components/ui/Field";
 import { Modal } from "@/components/ui/Modal";
@@ -17,6 +17,7 @@ import { Select } from "@/components/ui/Select";
 export interface AccountInput {
   name: string;
   tag: AccountTag;
+  prime: boolean;
   rankMode?: RankMode;
   rating?: string;
   steamUrl?: string;
@@ -36,6 +37,7 @@ export function AccountModal({
 }) {
   const [name, setName] = useState(initial?.name ?? "");
   const [tag, setTag] = useState<AccountTag>(initial?.tag ?? "Smurf");
+  const [prime, setPrime] = useState(initial ? initial.prime !== false : true);
   const [rankMode, setRankMode] = useState<RankMode>(initial?.rankMode ?? "Premier");
   const [rating, setRating] = useState(initial?.rating ?? "");
   const [steamUrl, setSteamUrl] = useState(initial?.steamUrl ?? "");
@@ -53,6 +55,7 @@ export function AccountModal({
     onSubmit({
       name: trimmed,
       tag,
+      prime,
       rankMode: rating.trim() ? rankMode : undefined,
       rating: rating.trim() || undefined,
       steamUrl: steamUrl.trim() || undefined,
@@ -107,6 +110,12 @@ export function AccountModal({
             ]}
           />
         </div>
+        <Switch
+          checked={prime}
+          onChange={setPrime}
+          label="มี Prime Status"
+          description="ไอดีที่ไม่มี Prime จะไม่ได้รับดรอปรายสัปดาห์และเลเวลอัป"
+        />
         <div className="grid grid-cols-2 gap-3">
           <Field label="โหมดแรงก์">
             {({ id }) => (
