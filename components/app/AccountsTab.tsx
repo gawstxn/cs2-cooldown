@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { BarChart3, Pencil, Search, Trash2, UserPlus } from "lucide-react";
 import type { AccountView } from "@/lib/cooldown/derive";
-import { isLongBan } from "@/lib/cooldown/derive";
+import { isLongBan, isPrime } from "@/lib/cooldown/derive";
 import { formatAgo, formatCompact, formatDuration, formatWhen } from "@/lib/cooldown/time";
 import { Button } from "@/components/ui/Button";
 import { Segmented } from "@/components/ui/Choice";
@@ -149,6 +149,11 @@ function AccountCard({ view, now, actions }: { view: AccountView; now: number; a
           <div className="flex items-center gap-2 min-w-0">
             <h3 className="text-lg font-semibold truncate">{account.name}</h3>
             <span className="shrink-0 rounded-full bg-soft px-2.5 py-0.5 text-xs text-ink-2">{account.tag}</span>
+            {!isPrime(account) && (
+              <span className="shrink-0 rounded-full border border-line-2 px-2.5 py-0.5 text-xs text-mute">
+                ไม่มี Prime
+              </span>
+            )}
           </div>
           <p className="text-[13px] text-mute truncate">{rank}</p>
         </div>
