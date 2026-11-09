@@ -59,7 +59,7 @@ export function ToastViewport({
                 t.undo?.();
                 dismiss(t.id);
               }}
-              className="flex items-center gap-1 h-9 px-3 rounded-full text-sm font-semibold text-pink hover:bg-white/10 cursor-pointer focus-ring"
+              className="flex items-center gap-1 h-9 px-3 rounded-full text-sm font-semibold text-pink hover:bg-on-dark/10 cursor-pointer focus-ring"
             >
               <Undo2 aria-hidden className="size-3.5" /> เลิกทำ
             </button>
@@ -68,7 +68,7 @@ export function ToastViewport({
             type="button"
             aria-label="ปิดข้อความ"
             onClick={() => dismiss(t.id)}
-            className="grid place-items-center size-9 rounded-full text-on-dark/60 hover:text-on-dark hover:bg-white/10 cursor-pointer focus-ring"
+            className="grid place-items-center size-9 rounded-full text-on-dark/60 hover:text-on-dark hover:bg-on-dark/10 cursor-pointer focus-ring"
           >
             <X aria-hidden className="size-4" />
           </button>

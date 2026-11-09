@@ -42,6 +42,52 @@
 
   --color-warn-ink: #8a5220;
   --color-warn-body: #6f5a45;
+
+  /* Backdrop behind modals. */
+  --color-scrim: #2b2320;
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* Dark theme: warm charcoal ground, latte actions, softer pastel status colors.
+   The resolved theme ("light" | "dark") is set on <html data-theme> by lib/theme.ts. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #1a1614;
+  --foreground: #f3ebe3;
+
+  --color-cream: #1a1614;
+  --color-cream-2: #1f1a17;
+  --color-card: #25201c;
+  --color-soft: #2f2925;
+  --color-line: #3a322c;
+  --color-line-2: #4a4039;
+  --color-unchecked: #6b5e54;
+
+  --color-ink: #f3ebe3;
+  --color-ink-2: #c9bcb1;
+  --color-mute: #a89a8e;
+
+  --color-espresso: #f1e2d3;
+  --color-espresso-2: #fff1e4;
+  --color-on-dark: #241d19;
+
+  --color-blush: #3b2329;
+  --color-blush-line: #5a3540;
+  --color-pink: #a3324f;
+
+  --color-caramel: #e3a56c;
+  --color-berry: #f08aa0;
+  --color-berry-ink: #f5a3b4;
+  --color-sage: #7fcaa3;
+  --color-mint: #2f7a55;
+
+  --color-warn-ink: #f2c38f;
+  --color-warn-body: #d9c3ae;
+
+  --color-scrim: #000000;
 }
 
 body {
@@ -61,16 +107,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1eae2;
+  background: var(--color-soft);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cfc3b6;
+  background: var(--color-unchecked);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a4622a;
+  background: var(--color-caramel);
 }
 
 /* Used by /v2 */

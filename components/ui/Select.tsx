@@ -124,7 +124,7 @@ export function Select<T extends string>({
           tabIndex={-1}
           aria-activedescendant={`${listId}-${active}`}
           onKeyDown={onListKey}
-          className="anim-pop absolute z-30 mt-2 left-0 min-w-full max-h-72 overflow-y-auto rounded-2xl border border-line-2 bg-white p-1.5 shadow-[0_16px_40px_rgba(43,35,32,0.12)] outline-none"
+          className="anim-pop absolute z-30 mt-2 left-0 min-w-full max-h-72 overflow-y-auto rounded-2xl border border-line-2 bg-card p-1.5 shadow-[0_16px_40px_rgba(43,35,32,0.12)] outline-none"
         >
           {options.map((o, i) => {
             const isSel = o.value === value;

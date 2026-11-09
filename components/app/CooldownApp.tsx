@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { BarChart3, Crosshair, Gift, LayoutGrid, Plus, Users } from "lucide-react";
+import { BarChart3, Crosshair, Gift, LayoutGrid, Monitor, Moon, Plus, Sun, Users } from "lucide-react";
+import { type ThemePref, setThemePref, useThemePref } from "@/lib/theme";
+import { Menu } from "@/components/ui/Menu";
 import type { Account, AppState } from "@/lib/cooldown/types";
 import { setAppState, makeId, useAppState } from "@/lib/cooldown/store";
 import { currentTime, useNow } from "@/lib/cooldown/clock";
@@ -46,6 +48,30 @@ export function CooldownApp() {
     );
   }
   return <Shell state={state} now={now} />;
+}
+
+const THEME_OPTIONS: { value: ThemePref; label: string; icon: React.ReactNode }[] = [
+  { value: "system", label: "ตามระบบ", icon: <Monitor aria-hidden className="size-4" /> },
+  { value: "light", label: "สว่าง", icon: <Sun aria-hidden className="size-4" /> },
+  { value: "dark", label: "มืด", icon: <Moon aria-hidden className="size-4" /> },
+];
+
+function ThemeMenu() {
+  const pref = useThemePref();
+  const current = THEME_OPTIONS.find((o) => o.value === pref) ?? THEME_OPTIONS[0];
+  return (
+    <Menu
+      label={`ธีม: ${current.label}`}
+      bordered
+      icon={current.icon}
+      items={THEME_OPTIONS.map((o) => ({
+        label: o.label,
+        icon: o.icon,
+        checked: o.value === pref,
+        onSelect: () => setThemePref(o.value),
+      }))}
+    />
+  );
 }
 
 function Shell({ state, now }: { state: AppState; now: number }) {
@@ -158,7 +184,7 @@ function Shell({ state, now }: { state: AppState; now: number }) {
                       {t.label}
                       {!!count && (
                         <span
-                          className={`min-w-6 h-[22px] px-1.5 rounded-full text-xs font-semibold inline-grid place-items-center tabular ${on ? "bg-white/15 text-on-dark" : t.id === "weekly" ? "bg-caramel/15 text-caramel" : "bg-soft text-ink-2"}`}
+                          className={`min-w-6 h-[22px] px-1.5 rounded-full text-xs font-semibold inline-grid place-items-center tabular ${on ? "bg-on-dark/15 text-on-dark" : t.id === "weekly" ? "bg-caramel/15 text-caramel" : "bg-soft text-ink-2"}`}
                         >
                           {count}
                         </span>
@@ -174,6 +200,7 @@ function Shell({ state, now }: { state: AppState; now: number }) {
             <time className="hidden sm:block text-[15px] font-medium text-ink-2 tabular">
               {formatTime(now)}:{pad(new Date(now).getSeconds())}
             </time>
+            <ThemeMenu />
             <Button
               icon={<Plus aria-hidden className="size-4" strokeWidth={2.4} />}
               onClick={() => actions.openLog()}

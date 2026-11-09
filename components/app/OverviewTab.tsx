@@ -169,7 +169,7 @@ function NextUnlock({
       <Progress
         value={next.progress}
         color={long ? STATUS_COLOR.ban : STATUS_COLOR.cooldown}
-        track="bg-white/70"
+        track="bg-card/70"
         className="h-2 mt-6"
         label="ความคืบหน้าคูลดาวน์"
       />

@@ -2,9 +2,10 @@ import React from "react";
 import type { AccountStatus } from "@/lib/cooldown/types";
 
 export const STATUS_COLOR: Record<AccountStatus, string> = {
-  ready: "#3f7f5f",
-  cooldown: "#a4622a",
-  ban: "#c0485f",
+  // CSS variables so status colors follow the active theme.
+  ready: "var(--color-sage)",
+  cooldown: "var(--color-caramel)",
+  ban: "var(--color-berry)",
 };
 
 type CardProps = React.HTMLAttributes<HTMLElement> & { as?: "section" | "div" | "article" };
