@@ -229,10 +229,6 @@ function Shell({ state, now }: { state: AppState; now: number }) {
         {tab === "weekly" && <WeeklyTab state={state} views={views} now={now} actions={actions} />}
       </main>
 
-      <footer className="border-t border-line py-5 text-center text-xs text-mute">
-        ข้อมูลเก็บไว้ในเบราว์เซอร์นี้เท่านั้น
-      </footer>
-
       {(modal.kind === "add" || modal.kind === "edit") && (
         <AccountModal
           initial={modal.kind === "edit" ? modal.account : undefined}

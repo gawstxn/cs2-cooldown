@@ -92,6 +92,16 @@ export function WeeklyTab({
         </h2>
         {views.length === 0 ? (
           <p className="px-6 pb-6 text-sm text-mute">เพิ่มไอดีก่อน แล้วรายการจะขึ้นที่นี่</p>
+        ) : eligible.length === 0 ? (
+          <div className="px-6 pb-6">
+            <p className="text-[15px] text-ink">
+              {views.length === 1 ? "ไอดีนี้ไม่มี Prime" : `ทั้ง ${views.length} ไอดีไม่มี Prime`}{" "}
+              จึงไม่มีดรอปหรือเลเวลอัปให้ติ๊ก
+            </p>
+            <p className="mt-1 text-sm text-mute">
+              ถ้าไอดีไหนมี Prime เปิดได้ที่เมนู ⋮ แล้วเลือกแก้ไขไอดีในแท็บไอดี
+            </p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <div className="min-w-[620px]">
@@ -101,11 +111,6 @@ export function WeeklyTab({
                 <span className="text-center">เลเวลอัป</span>
                 <span>8 สัปดาห์ล่าสุด</span>
               </div>
-              {eligible.length === 0 && (
-                <p className="px-6 py-4 border-t border-soft text-sm text-mute">
-                  ยังไม่มีไอดีที่มี Prime เปิด Prime Status ได้ที่เมนูแก้ไขไอดีในแท็บไอดี
-                </p>
-              )}
               {eligible.map((v) => {
                 const m = marks[v.account.id] ?? {};
                 const past = pastDrops(state, v.account.id, now);
