@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "CS2 Cooldown Tracker | ระบบติดตามคูลดาวน์เกม CS2",
-  description: "ระบบติดตามและนับเวลารีเซ็ตคูลดาวน์แต่ละไอดีเกม CS2 พร้อมดีไซน์สุดพรีเมียมธีมมืด",
+  description: "ระบบติดตามและนับเวลารีเซ็ตคูลดาวน์แต่ละไอดีเกม CS2 ดูได้ทันทีว่าไอดีไหนพร้อมเล่น และไอดีไหนจะปลดล็อกเมื่อไร",
 };
 
 export default function RootLayout({

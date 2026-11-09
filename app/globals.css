@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f7f2ec;
+  --foreground: #2a211d;
 }
 
 @theme inline {
@@ -12,35 +12,109 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Warm minimal palette: cream ground, espresso actions, pastel status colors. */
+@theme {
+  --color-cream: #f7f2ec;
+  --color-cream-2: #fbf7f2;
+  --color-card: #fffdfa;
+  --color-soft: #f1eae2;
+  --color-line: #e9e0d6;
+  --color-line-2: #e2d7cb;
+  --color-unchecked: #cfc3b6;
+
+  --color-ink: #2a211d;
+  --color-ink-2: #6f625a;
+  --color-mute: #7a6d65;
+
+  --color-espresso: #2b2320;
+  --color-espresso-2: #43372f;
+  --color-on-dark: #fff8f1;
+
+  --color-blush: #f7e4e8;
+  --color-blush-line: #efcfd6;
+  --color-pink: #f2c6d2;
+
+  --color-caramel: #a4622a;
+  --color-berry: #c0485f;
+  --color-berry-ink: #b03e55;
+  --color-sage: #3f7f5f;
+  --color-mint: #a9d8bd;
+
+  --color-warn-ink: #8a5220;
+  --color-warn-body: #6f5a45;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-ibm-plex-sans-thai), ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
-/* Elegant Light Scrollbar */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f1eae2;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #cfc3b6;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ea580c;
+  background: #a4622a;
 }
 
-/* Premium SaaS Dot Grid Background */
+/* Used by /v2 */
 .dot-grid {
   background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
   background-size: 24px 24px;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-pop {
+  animation: pop-in 160ms ease-out;
+}
+
+.anim-fade {
+  animation: fade-in 160ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Prevent iOS Safari auto-zoom on focus by ensuring font-size is at least 16px on mobile */
@@ -52,3 +126,8 @@ body {
   }
 }
 
+@layer components {
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-berry/60 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+}
