@@ -57,6 +57,9 @@ function migrateLegacy(): AppState {
     if (!acc) {
       acc = { id: makeId("acc"), name: name.trim(), tag: "Smurf", createdAt };
       byName.set(key, acc);
+    } else {
+      // Saved profiles carry no date, so date the account from its earliest cooldown.
+      acc.createdAt = Math.min(acc.createdAt, createdAt);
     }
     return acc;
   };

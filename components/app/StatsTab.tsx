@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 import { AlertTriangle, Download } from "lucide-react";
 import type { AppState } from "@/lib/cooldown/types";
 import { type AccountView, type StatsRange, buildStats, isLongBan, weekLabel } from "@/lib/cooldown/derive";
-import { DAY, formatDate, formatDateTime, formatDuration } from "@/lib/cooldown/time";
+import { DAY, MINUTE, formatDate, formatDateTime, formatDuration } from "@/lib/cooldown/time";
 import { Button } from "@/components/ui/Button";
 import { Segmented } from "@/components/ui/Choice";
 import { Card, STATUS_COLOR } from "@/components/ui/Display";
@@ -17,6 +17,11 @@ function daysText(ms: number) {
   const d = ms / DAY;
   if (d >= 1) return `${Math.floor(d)} วัน`;
   return formatDuration(ms);
+}
+
+/** "2.8 วัน" for a day or more, otherwise "5 ชม. 20 นาที". */
+function averageText(ms: number) {
+  return ms >= DAY ? `${(ms / DAY).toFixed(1)} วัน` : formatDuration(ms);
 }
 
 export function StatsTab({
@@ -138,7 +143,7 @@ export function StatsTab({
             <Tile
               label="เวลาที่ติดรวม"
               value={daysText(stats.totalMs)}
-              sub={stats.count ? `เฉลี่ย ${(stats.totalMs / stats.count / DAY).toFixed(1)} วันต่อครั้ง` : "-"}
+              sub={stats.count ? `เฉลี่ย ${averageText(stats.totalMs / stats.count)} ต่อครั้ง` : "-"}
             />
             <Tile
               label="นานที่สุด"
@@ -148,8 +153,8 @@ export function StatsTab({
             />
             <Tile
               label="เล่นไม่โดนติดกัน"
-              value={daysText(stats.bestCleanMs)}
-              sub="สถิติดีที่สุด"
+              value={stats.bestCleanMs >= MINUTE ? daysText(stats.bestCleanMs) : "-"}
+              sub={stats.bestCleanMs >= MINUTE ? "สถิติดีที่สุด" : "ยังไม่มีช่วงที่เล่นได้ในประวัติ"}
               color={STATUS_COLOR.ready}
             />
           </div>

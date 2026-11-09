@@ -88,7 +88,8 @@ export function buildStats(
 
   // Longest stretch without a cooldown, over the account's whole history.
   let bestCleanMs = 0;
-  let cursor = account.createdAt;
+  // Accounts migrated from the old format can have a createdAt later than their first record.
+  let cursor = Math.min(account.createdAt, all[0]?.startedAt ?? account.createdAt);
   all.forEach((r) => {
     bestCleanMs = Math.max(bestCleanMs, r.startedAt - cursor);
     cursor = Math.max(cursor, effectiveEnd(r));
